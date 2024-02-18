@@ -5,10 +5,16 @@ pipeline {
         stage('Hello') {
             steps {
                 echo 'Hello World'
-                mail bcc: '', body: 'hello world', cc: '', from: '', replyTo: '', subject: 'cicd pipeline successfully genetared.', to: 'vikrammano3@gmail.com'
-~           
-
-            }
+              post{
+      always{
+               {
+            mail  to: "vikrammano3@gmail.com",
+                  subject: "Notification mail from Jenkins",
+                  body: "CI/CD pipeline completed successfully.\n\nCheck the application"
+                
+               }                
+        }
+                
         }
     }
 }
