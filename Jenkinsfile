@@ -1,23 +1,16 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-              post{
+  agent any
+    post{
       always{
-               {
-            mail  to:"vikrammano3@gmail.com",
+            sh 'docker rm -f mypycont'
+            sh 'docker run --name mypycont -d -p 3000:5000 my-flask'
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+            mail  to: "yasmin@guvi.in",
                   subject: "Notification mail from Jenkins",
                   body: "CI/CD pipeline completed successfully.\n\nCheck the application"
                 
-               }                
-        }
                 
         }
-    }
 }
-
-
+    }
 
